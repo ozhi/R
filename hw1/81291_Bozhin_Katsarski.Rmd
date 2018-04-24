@@ -1,0 +1,193 @@
+---
+title: "ВиС (практикум) - домашно 1"
+output:
+  html_document:
+    df_print: paged
+---
+
+***
+
+## Божин Кацарски
+ф.н. 81291, 24.04.2018
+
+***
+
+## Зад 1.
+Разгледайте данните `Cars93` oт пакета `UsingR`
+```{r, echo=TRUE, warning=FALSE, message=FALSE, error=FALSE}
+install.packages("UsingR")
+library("UsingR")
+```
+<br><br><br>
+
+
+
+### а)
+Определете марката на петте най-скъпи автомобила.
+```{r}
+carsByPrice <- Cars93[order(Cars93["Price"], decreasing=TRUE), ]
+manufacturers <- carsByPrice[, "Manufacturer"]
+top5 <- manufacturers[1:5]
+top5
+```
+<br><br><br>
+
+
+
+### б)
+Определете броя на цилиндрите на трите най-мощни спортни коли.
+```{r}
+sportyCars <- Cars93[Cars93["Type"]=="Sporty",]
+byHP <- sportyCars[order(sportyCars["Horsepower"], decreasing=TRUE), ]
+top3 <- byHP[1:3, ]
+cylinders <- top3[, "Cylinders"]
+cylinders
+```
+<br><br><br>
+
+
+
+### в)
+Преизчислете разхода на автомобилите от мили за галон в литри за 100 км.
+```{r}
+carsNewFormat <- Cars93
+carsNewFormat[, "MPG.city"] <- 282.48 / carsNewFormat[, "MPG.city"]
+carsNewFormat[, "MPG.highway"] <- 282.48 / carsNewFormat[, "MPG.highway"]
+colnames(carsNewFormat)[colnames(carsNewFormat) == "MPG.city"] <- "L/100km city"
+colnames(carsNewFormat)[colnames(carsNewFormat) == "MPG.highway"] <- "L/100km highway"
+carsNewFormat
+```
+<br><br><br>
+
+
+
+### г)
+Как се влияе разходът от броя на цилиндрите? Представете графично.
+```{r}
+boxplot(Cars93[, "MPG.city"] ~ Cars93[, "Cylinders"],
+        main="MPG.city according to Cylinders", xlab="Cylinders", ylab="MPG.city")
+```
+
+От графиката виждаме, че има негативна корелация между броя цилиндри на колите и разходът (разглеждаме го само в града).
+Колкото повече цилиндри има колата, толкова е по-нисък разходът й.
+<br><br><br>
+
+
+
+### д)
+Потърсете връзка между обема на двигателите и мощността.
+Определете outliers, кои модели са това?
+Пресметнете корелацията със и без outliers.
+Извод?
+```{r}
+plot(Cars93[, "EngineSize"], Cars93[, "Horsepower"],
+      main="Horsepower according to Enginse size",
+     xlab="Engine size", ylab="Horsepower")
+
+cor(Cars93[, "EngineSize"], Cars93[, "Horsepower"])
+```
+Съдейки по графиката, има сходство с линейна зависимост - много от точките са близо до правата y=x, но все повече се разсейват при по-големите x/y. По-скоро не можем да извлечем добър извод за връзка между обема на двигателите и мощността.
+
+Outliers разпознаваме също по графиката - тези точки, които стоят далече от правата y=x -
+например моделите `RX-7` и `Stealth` (двете точки горе вляво на графиката).
+<br><br><br>
+
+
+
+### е)
+Представете графично цената в зависимост от броя на пътниците. Извод?
+```{r}
+boxplot(Cars93[, "Price"] ~ Cars93[, "Passengers"],
+        main="Car price according to number of passengers", xlab="Passengers", ylab="Price")
+```
+
+От графиката виждаме, че колите с две врати са значителнопо по-скъпи от останалите. Средната цена на колите с повече врати е няколко пъти по-ниска от тази на двуратите.
+
+Цената на колите с 8 врати се изменя в най-тесни граници, следвана от тези със 7 и 2 врати, докато цената на колите с 5 врати се изменя в най-широки граници.
+
+Тук имаме и outlier - най-скъпата измежду всички коли е с 5 врати и е значително по-скъпа от останалите петврати коли.
+
+***
+
+## Зад 2.
+Нека X и Y са последните две цифри от факултетния ви номер. Генерирайте 50 случайни наблюдения в равномерно разпределение в интервала [0; X + 1] и 50 случайни наблюдения, експоненциално разпределени с параметър 1 / (Y + 1).
+```{r}
+x <- 9
+y <- 1
+unif <- runif(50, 0, x + 1) # sample(x + 1, 50, replace = TRUE, prob = NULL)
+exp <- rexp(50, 1 / (y + 1))
+```
+<br><br><br>
+
+
+
+### а)
+Постройте боксполот за двете извадки на една графика, направете извод.
+```{r}
+x <- 9
+y <- 1
+boxplot(unif, exp, names=c("Uniform distribution", "Exponential distribution"))
+```
+
+При равномерното разпределение:
+<br>* средната (очакваната) стойност е близка до средата на интервала
+<br>* първият и четвъртият квартил са близки по големина и близки до краищата на интервала
+<br>* обикновено няма outliers
+
+При експоненциалното разпределение:
+<br>* средната стойност е по-близка до началото на интервала, отколкото до средата
+<br>* първият квартил е малък по големина, а четвъртият - голям
+<br>* често има outliers - към края на интервала (далече от очакваната стойност)
+<br><br><br><br>
+
+
+
+### б)
+Постройте хистограма на експоненциалните данни.
+На същата графика начертайте плътността, построена по данните и теоретичната плътност.
+```{r}
+x <- 9
+y <- 1
+
+hist(exp, main="Histogram of exponential distribution", freq=FALSE)
+lines(density(exp), col="red") # empirical density
+lines(0 : x + 1, dexp(0 : x + 1), "l", col="blue") # theoretical density
+```
+
+***
+
+## Зад 3.
+Нека x1, ..., x4 са цели числа в интервала [0; T]. Напишете функция f(k, T, n), която по направени n на брой наблюдения пресмята емпиричната вероятност да е изпълнено x1 + 2 \* x2 + 3 \* x3 + x4 = k, където k е цяло число. Генерирайте случайно T в интервала [1; 10] и случайно k в интервала [10; 30] и пресметнете търсената вероятност. Направете графика на емпиричната вероятност в зависимост от броя на наблюденията.
+```{r}
+f <- function(k, T, n = 1) {
+  successfulExperiments <- 0
+
+  for (i in 1 : n) {
+    x <- sample(0:T, size=4, replace = TRUE, prob = NULL)
+    
+    if (x[1] + 2 * x[2] + 3 * x[3] + x[4] == k) {
+      successfulExperiments = successfulExperiments + 1
+    }
+  }
+  
+  return (successfulExperiments / n)
+}
+
+k <- sample(10 : 30, 1, replace = TRUE, prob = NULL)
+T <- sample(1 : 10, 1, replace = TRUE, prob = NULL)
+
+n <- 1000
+
+results <- vector()
+results[1] <- 0
+for (i in c(2 : n)) {
+  results[i] <- results[i-1] + f(k, T)
+}
+
+for (i in c(2 : n)) {
+  results[i] <- results[i] / i
+}
+
+plot(1 : n, results, "l",
+     xlab="experiments", ylab="probability of success")
+```
