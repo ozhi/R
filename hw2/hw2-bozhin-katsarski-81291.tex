@@ -1,0 +1,473 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Божин Кацарски - Домашно по R №2},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{Божин Кацарски - Домашно по R №2}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \author{}
+  \preauthor{}\postauthor{}
+  \date{}
+  \predate{}\postdate{}
+
+
+\begin{document}
+\maketitle
+
+фн 81291, Компютърни науки, 3 курс, 1 поток
+
+\subsubsection{1 зад.}\label{.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{install.packages}\NormalTok{(}\StringTok{"UsingR"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Installing package into '/home/ozhi/R/x86_64-pc-linux-gnu-library/3.4'
+## (as 'lib' is unspecified)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(}\StringTok{"UsingR"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: MASS
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: HistData
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: Hmisc
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: lattice
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: survival
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: Formula
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: ggplot2
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'Hmisc'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     format.pval, units
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'UsingR'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:survival':
+## 
+##     cancer
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data}\NormalTok{(homedata)}
+
+\NormalTok{homes =}\StringTok{ }\NormalTok{homedata[(}\DecValTok{91} \OperatorTok{*}\StringTok{ }\DecValTok{50}\NormalTok{) }\OperatorTok{:}\StringTok{ }\NormalTok{(}\DecValTok{91} \OperatorTok{*}\StringTok{ }\DecValTok{50} \OperatorTok{+}\StringTok{ }\DecValTok{49}\NormalTok{), ]}
+\NormalTok{homes}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       y1970  y2000
+## 4550  71000 297600
+## 4551  95900 401900
+## 4552  56700 237600
+## 4553  92500 387600
+## 4554  93600 392200
+## 4555  83000 347700
+## 4556  86200 361100
+## 4557  75100 314600
+## 4558  83000 347600
+## 4559 124600 521700
+## 4560  75900 317700
+## 4561  72700 304300
+## 4562  94800 396800
+## 4563  78400 328100
+## 4564  63300 264900
+## 4565  64400 269500
+## 4566  63900 267400
+## 4567 101900 426400
+## 4568  65600 274500
+## 4569  66700 279100
+## 4570  89100 372800
+## 4571  83200 348100
+## 4572  81800 342200
+## 4573 122700 513200
+## 4574  78400 327900
+## 4575  73100 305700
+## 4576 138100 577500
+## 4577  76000 317800
+## 4578  75000 313600
+## 4579  68800 287600
+## 4580  81800 341900
+## 4581  86500 361500
+## 4582  71100 297100
+## 4583  69700 291200
+## 4584  67600 282400
+## 4585  66100 276100
+## 4586  69600 290700
+## 4587 123400 515400
+## 4588  90600 378000
+## 4589  62800 262000
+## 4590  96600 403000
+## 4591  66500 277400
+## 4592 107000 446300
+## 4593  76100 317300
+## 4594  64000 266800
+## 4595  90200 376000
+## 4596  82700 344700
+## 4597  69100 288000
+## 4598  70800 294900
+## 4599  73400 305700
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{t.test}\NormalTok{(homes[}\StringTok{"y1970"}\NormalTok{], }\DataTypeTok{conf.level =} \FloatTok{0.97}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  One Sample t-test
+## 
+## data:  homes["y1970"]
+## t = 32.556, df = 49, p-value < 2.2e-16
+## alternative hypothesis: true mean is not equal to 0
+## 97 percent confidence interval:
+##  76016.4 87223.6
+## sample estimates:
+## mean of x 
+##     81620
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{t.test}\NormalTok{(homes[}\StringTok{"y2000"}\NormalTok{], }\DataTypeTok{conf.level =} \FloatTok{0.97}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  One Sample t-test
+## 
+## data:  homes["y2000"]
+## t = 32.525, df = 49, p-value < 2.2e-16
+## alternative hypothesis: true mean is not equal to 0
+## 97 percent confidence interval:
+##  317773.2 364670.8
+## sample estimates:
+## mean of x 
+##    341222
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{t.test}\NormalTok{(homes[}\StringTok{"y1970"}\NormalTok{], }\DataTypeTok{y =}\NormalTok{ homes[}\StringTok{"y2000"}\NormalTok{], }\DataTypeTok{conf.level =} \FloatTok{0.97}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Welch Two Sample t-test
+## 
+## data:  homes["y1970"] and homes["y2000"]
+## t = -24.067, df = 54.578, p-value < 2.2e-16
+## alternative hypothesis: true difference in means is not equal to 0
+## 97 percent confidence interval:
+##  -283637.6 -235566.4
+## sample estimates:
+## mean of x mean of y 
+##     81620    341222
+\end{verbatim}
+
+Получихме 97\% доверителен интервал {[}76 016.40, 87 223.60{]} за цените
+през 1970г и {[}317 773.20, 364 670.80{]} за цените през 2000г.
+
+Чрез съвместен тест на Стюдънт с ниво на довери 97\% получаваме p-value
+2.2е-16, което е много малко. Следователно отхвърляме хипотезата, че
+цените са се запазили от 1970 до 2000.
+
+\subsubsection{2 зад.}\label{.-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rain =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\FloatTok{8.9}\NormalTok{, }\FloatTok{6.4}\NormalTok{, }\FloatTok{12.8}\NormalTok{, }\FloatTok{9.6}\NormalTok{, }\FloatTok{13.8}\NormalTok{, }\FloatTok{16.1}\NormalTok{, }\FloatTok{12.4}\NormalTok{, }\FloatTok{12.8}\NormalTok{, }\FloatTok{11.8}\NormalTok{, }\FloatTok{16.0}\NormalTok{, }\FloatTok{7.4}\NormalTok{, }\FloatTok{12.5}\NormalTok{)}
+\NormalTok{crops =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\FloatTok{306.2}\NormalTok{, }\FloatTok{272.5}\NormalTok{, }\FloatTok{385.0}\NormalTok{, }\FloatTok{392.5}\NormalTok{, }\FloatTok{400.0}\NormalTok{, }\FloatTok{531.2}\NormalTok{, }\FloatTok{415.0}\NormalTok{, }\FloatTok{407.5}\NormalTok{, }\FloatTok{373.7}\NormalTok{, }\FloatTok{493.7}\NormalTok{, }\FloatTok{325.0}\NormalTok{, }\FloatTok{400.0}\NormalTok{)}
+
+\KeywordTok{simple.lm}\NormalTok{(rain, crops)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{hw2-bozhin-katsarski-81291_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = y ~ x)
+## 
+## Coefficients:
+## (Intercept)            x  
+##      139.31        21.57
+\end{verbatim}
+
+Когато начертаем линейния модел на зависимостта на реколтата от валежите
+със simple.lm, получаваме формулата y = 21.57 * x + 139.31. Следователно
+при валежи 5 + 1 = 6 cm/m2 можем да очакваме реколта 268.73 kg/декар.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{new_rain =}\StringTok{ }\DecValTok{5} \OperatorTok{+}\StringTok{ }\DecValTok{1}
+\NormalTok{new_crop =}\StringTok{ }\FloatTok{21.57} \OperatorTok{*}\StringTok{ }\NormalTok{new_rain }\OperatorTok{+}\StringTok{ }\FloatTok{139.31}
+\NormalTok{new_crop}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 268.73
+\end{verbatim}
+
+Формулата също така сочи, че при увеличаване на валежите с 1cm/m2,
+реколтата се увеличавас 21.57kg/dka (което е по-малко от 24).
+
+\subsubsection{3 зад.}\label{.-2}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{first =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{39}\NormalTok{, }\DecValTok{50}\NormalTok{, }\DecValTok{61}\NormalTok{, }\DecValTok{67}\NormalTok{, }\DecValTok{40}\NormalTok{, }\DecValTok{40}\NormalTok{, }\DecValTok{54}\NormalTok{)}
+\NormalTok{second =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{60}\NormalTok{, }\DecValTok{53}\NormalTok{, }\DecValTok{42}\NormalTok{, }\DecValTok{41}\NormalTok{, }\DecValTok{40}\NormalTok{, }\DecValTok{54}\NormalTok{, }\DecValTok{63}\NormalTok{, }\DecValTok{69}\NormalTok{)}
+\KeywordTok{t.test}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ first, }\DataTypeTok{y =}\NormalTok{ second, }\DataTypeTok{alternative =} \StringTok{"less"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Welch Two Sample t-test
+## 
+## data:  first and second
+## t = -0.45541, df = 12.665, p-value = 0.3283
+## alternative hypothesis: true difference in means is less than 0
+## 95 percent confidence interval:
+##      -Inf 7.551634
+## sample estimates:
+## mean of x mean of y 
+##  50.14286  52.75000
+\end{verbatim}
+
+Имаме хипотезата, че двата вида печки греят за еднкво време, като
+алтернтивата е, че първите греят по-бързо. Проверяваме хипотезата с тест
+на Стюдънт с ниво на доверие 95\%. Получаваме p-value = 0.3283, което
+сравнително голямо. Това означава, че нямаме основание да отхрълим
+хипотезата, тоест не можем да приемем алтернативата.
+
+\subsubsection{4 зад.}\label{.-3}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{azbestos_cancer =}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}
+    \DataTypeTok{total_people =} \KeywordTok{c}\NormalTok{(}\DecValTok{5000}\NormalTok{, }\DecValTok{520}\NormalTok{),}
+    \DataTypeTok{people_with_lung_cancer =} \KeywordTok{c}\NormalTok{(}\DecValTok{48}\NormalTok{, }\DecValTok{12}\NormalTok{)}
+\NormalTok{)}
+\NormalTok{azbestos_cancer }\CommentTok{# in the city and in offices with azbestos}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   total_people people_with_lung_cancer
+## 1         5000                      48
+## 2          520                      12
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{chisq.test}\NormalTok{(azbestos_cancer)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Pearson's Chi-squared test with Yates' continuity correction
+## 
+## data:  azbestos_cancer
+## X-squared = 6.5249, df = 1, p-value = 0.01064
+\end{verbatim}
+
+Извършваме хи квадрат тест на хипотезата, че рака на белите дробове е
+независим от азбеста в мазилката с помощта на функцията chisq.test.
+Получаваме p-value = 0.01064, което е доста малко, следователно имаме
+основание да отхвърлим хипотезата и да приемем алтернативата, че има
+връзка между азбеста в мазилката и рака на белите дробове.
+
+\subsubsection{5 зад.}\label{.-4}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A =}\StringTok{ }\KeywordTok{rexp}\NormalTok{(}\DecValTok{100}\NormalTok{, }\DataTypeTok{rate=}\DecValTok{10}\NormalTok{)}
+\NormalTok{B =}\StringTok{ }\KeywordTok{rexp}\NormalTok{(}\DecValTok{100}\NormalTok{, }\DataTypeTok{rate=}\DecValTok{10}\NormalTok{)}
+\NormalTok{C =}\StringTok{ }\NormalTok{A }\OperatorTok{/}\StringTok{ }\NormalTok{(A }\OperatorTok{+}\StringTok{ }\NormalTok{B)}
+
+\KeywordTok{hist}\NormalTok{(C, }\DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\FloatTok{0.00}\NormalTok{, }\FloatTok{0.25}\NormalTok{, }\FloatTok{0.50}\NormalTok{, }\FloatTok{0.75}\NormalTok{, }\FloatTok{1.00}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{hw2-bozhin-katsarski-81291_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ks.test}\NormalTok{(C, }\StringTok{"punif"}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  One-sample Kolmogorov-Smirnov test
+## 
+## data:  C
+## D = 0.053409, p-value = 0.9379
+## alternative hypothesis: two-sided
+\end{verbatim}
+
+При тестване на хипотезата, че данните C са равномерно разпределени в
+{[}0;1{]} с Колмогоров-Смирнов тест, полуихме голямо
+(\textgreater{}0.05) p-value, което означава, че не можем да отхвърлим
+хипотезата, че данните са равномерно разпределени.
+
+
+\end{document}
