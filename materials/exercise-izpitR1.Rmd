@@ -1,0 +1,135 @@
+---
+title: "Exercise - 'IzpitR1'"
+output: html_notebook
+---
+
+В задачи 1, 2 и 3 се използват данните ’Aids2’ от пакета ”
+MASS“.
+
+```{r}
+library('MASS')
+data(Aids2)
+Aids2
+```
+
+1 zad.
+Колко от изследваните са на възраст под 20 години?
+• Определете пола на първите петима диагностицирани със спин.
+• Каква част от мъжете са се заразили по кръвен път (blood)?
+• Направете подходяща графика, която да отразява връзката на смъртността и щатът,
+в който живеят пациентите.
+
+```{r}
+attach(Aids2)
+
+length(Aids2$age[Aids2$age < 20])
+
+Aids2[order(diag),'sex'][1:5]
+
+menBlood = Aids2[sex=='M' & T.categ == 'blood',]
+men = Aids2[sex=='M',]
+nrow(menBlood) / nrow(men)
+
+plot(death ~ state)
+```
+
+2 zad.
+Вярно ли е, че при жените смъртността е по-ниска? Формулирайте и проверете хипотеза
+за това твърдение.
+```{r}
+women = Aids2[sex == 'F', 'death']
+men = Aids2[sex == 'M', 'death']
+
+men
+women
+t.test(women, men, alternative = 'less')
+# p-value 0.08 => ne othrurlqme hipotezatza che sa ravni 
+```
+
+
+3 zad.
+Можем ли да приемем, че средната възраст на починалите пациенти е 38 години?
+```{r}
+ageDead = Aids2[status == 'D', 'age']
+t.test(ageDead-38)
+# we get p-value 0.40 so we accept the null hypothesis => the average is 38
+```
+
+
+4 zad.
+Нека X е случайна величина с хи-квадрат разпределение с 10 степени на свобода. Генерирайте
+100 наблюдения над X и по тях постройте хистограма. На същата графика
+начертайте теоретичната функция на плътността на X.
+```{r}
+?Chisquare
+d = rchisq(100, 10)
+hist(d)
+
+id = function (x) x
+x = 0:30
+lines(x, pchisq(x, 10)*10) # ??? no
+```
+
+
+5 zad.
+Използвайте наблюденията само за мъжките котки от данните ”cats“ в пакета MASS.
+Как зависи теглото на сърцето от общото тегло? Вярно ли е, че при котки по тежки
+с 1 кг сърцето е по тежко с 5 гр? Постройте 95% доверителен интервал за сърцето на
+котка, с тегло 2.6 кг.
+```{r}
+library("MASS")
+data(cats)
+attach(cats)
+
+library("UsingR")
+
+model = simple.lm(cats[sex=='M','Bwt'], cats[sex=='M','Hwt'])
+
+t.test((Hwt+0.23)/Bwt-5, conf.level=0.95)
+
+
+abline(lm(Bwt ~ Hwt))
+
+summary(model)
+?prop.test
+
+?predict
+
+predict(lm(Bwt ~ Hwt), 2.6)
+
+?wilcox.test
+
+```
+
+
+
+6 zad.
+Три групи от по 20 жени са спазвали три различни диети. В ”Data1.txt“ са дадени
+килограмите, с който са отслабнали жените. Представете данните графично. Диетите
+различават ли се съществено?
+```{r}
+?data.frame
+?scan
+data = scan(file="Data1.txt")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
